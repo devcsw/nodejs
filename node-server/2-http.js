@@ -1,23 +1,27 @@
 const http = require('http');
 const fs = require('fs');
+const ejs = require('ejs');
 //const http2 = require('http2');
 
+const name = "choi"
+const courses = [
+    {name : 'HTML'},
+    {name : 'JavaScript'},
+    {name : 'node.js'}
+]
 const server = http.createServer((req, res)=> {
-    // console.log('incoming');
-    // console.log(req.headers);
-    // console.log(req.httpVersion);
-    // console.log(req.method);
-    // console.log(req.url);
+
     const url = req.url;
     res.setHeader('Content-Type', 'text/html');
     if(url === '/'){
-            
-        const read = fs.createReadStream('./html/index.html');
-        read.pipe(res);
+            ejs.renderFile('./template/index.ejs', {name})
+            .then((data)=>res.end(data));
     } else if (url === '/courses'){
-        fs.createReadStream('./html/courses.html').pipe(res);
+        ejs.renderFile('./template/courses.ejs', {courses})
+            .then((data)=>res.end(data));
     } else {
-        fs.createReadStream('./html/not-found.html').pipe(res);
+        ejs.renderFile('./template/not-found.ejs', {name})
+            .then((data)=>res.end(data));
     
     }
 }) ;
