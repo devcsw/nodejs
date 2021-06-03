@@ -4,9 +4,14 @@ import userRouter from './router/user.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); //REST API -> Body
+app.use(express.urlencoded({extended: false}));  // HTML Form -> Body
+
+app.use(express.static('public')); //사용자가 public 폴더안에 모든 파일에 접속가능
 
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
+
+
 
 app.listen(8080);
