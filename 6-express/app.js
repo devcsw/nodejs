@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/file1', async (req, res) => {
+app.get('/file1', (req, res) => {
 try{
     const data = fs.readFileSync('/file1.txt');
     res.send(data);
@@ -14,19 +14,19 @@ try{
 });
 
 app.get('/file2', (req, res) => {
-    return fsAsync
+    fsAsync
     .readFile('/file.txt')
     .then((data)=> res.send(data)) 
-    //.catch((error) => res.sendStatus(404));
+    .catch((error) => res.sendStatus(404));
 });
 app.get('/file3', async function (req, res) {
-    // try{
+    try{
     const data = await fsAsync.readFile('/file2.txt');
     res.send(data);
-    // }
-    // catch{
-    //     res.sendStatus(404);
-    // }
+    }
+    catch{
+        res.sendStatus(404);
+    }
 
 });
 
