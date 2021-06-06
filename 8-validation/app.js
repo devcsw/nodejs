@@ -16,10 +16,9 @@ const validate = (req, res, next) => {
 app.post(
     '/users', 
     [
-    body('name').isLength({min: 2, max: 10}).withMessage('이름은 2글자이상 10글자 이하'),
-    body('age').isInt().withMessage('숫자를 입력해'), 
-    body('email').isEmail().withMessage('이메일을 입력해'),
-    body('job.name').notEmpty,
+    body('name').trim().isLength({min: 2, max: 10}).withMessage('이름은 2글자이상 10글자 이하'),
+    body('age').isInt().withMessage('숫자를 입력해 주세요'),
+    body('email').isEmail().withMessage('이메일 입력해요').normalizeEmail(),
     validate,
     ],
     (req, res, next) => {
